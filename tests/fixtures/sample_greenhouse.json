@@ -1,0 +1,8 @@
+{"jobs": [
+  {"id": 4012345, "title": "Quantitative Developer - Low Latency", "updated_at": "2026-07-01T10:00:00Z",
+   "location": {"name": "Chicago, IL"}, "absolute_url": "https://boards.greenhouse.io/example/jobs/4012345",
+   "content": "Build C++ trading systems."},
+  {"id": 4012346, "title": "Senior Recruiter", "updated_at": "2026-07-01T10:00:00Z",
+   "location": {"name": "New York, NY"}, "absolute_url": "https://boards.greenhouse.io/example/jobs/4012346",
+   "content": "Hire people."}
+]}

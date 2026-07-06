@@ -1,0 +1,128 @@
+# ------------------------------------------------------------------
+# Quant Job Tracker configuration
+# ------------------------------------------------------------------
+
+timezone: America/Los_Angeles
+daily_send_time: "08:00"          # informational; actual schedule lives in .github/workflows/daily.yml
+
+alerts:
+  channel: telegram               # email | telegram | sms | slack | none
+  include_medium_confidence: false
+  zero_update: short              # none | short  ("no new postings" one-liner)
+  max_full_listings: 25           # above this, send summary grouped by category
+  preview_only: false             # true = print alert to stdout, never send
+
+filters:
+  seniority: [internship, new_grad, full_time, experienced]   # keep all; remove to narrow
+  include_remote: true
+  # Empty list = all locations. Otherwise substring match on job location.
+  locations: []
+    # - New York
+    # - Chicago
+    # - Singapore
+    # - London
+
+scraping:
+  request_delay_seconds: 2.0      # per-domain politeness delay
+  timeout_seconds: 20
+  max_retries: 3
+  backoff_factor: 2.0
+  user_agent: "quant-job-tracker/1.0 (personal job-search tool; contact via GitHub repo)"
+  respect_robots_txt: true
+  error_alert_after_consecutive_failures: 3
+
+classifier:
+  # High confidence: title hits a strong term (or strong pattern) at a relevant firm.
+  strong_title_terms:
+    - quantitative trader
+    - trader
+    - trading intern
+    - trading analyst
+    - quantitative researcher
+    - quantitative developer
+    - quantitative research
+    - quantitative analyst
+    - quant trader
+    - quant researcher
+    - quant developer
+    - quant analyst
+    - desk quant
+    - risk quant
+    - algo trader
+    - algorithmic trader
+    - algorithmic trading
+    - systematic trading
+    - systematic trader
+    - low latency
+    - low-latency
+    - trading engineer
+    - trading systems
+    - trading infrastructure
+    - trading support engineer
+    - execution research
+    - market making
+    - market maker
+    - hft
+    - electronic trading
+  # Medium confidence: generic technical title, but at a validated quant-finance firm.
+  medium_title_terms:
+    - software engineer
+    - c++
+    - rust engineer
+    - python developer
+    - data scientist
+    - machine learning
+    - ml engineer
+    - research engineer
+    - infrastructure engineer
+    - site reliability
+    - fpga
+    - network engineer
+  exclude_title_terms:
+    - sales
+    - marketing
+    - recruiter
+    - recruiting
+    - human resources
+    - talent
+    - legal
+    - counsel
+    - accounting
+    - accountant
+    - customer support
+    - customer success
+    - retail banking
+    - branch
+    - wealth advisor
+    - financial advisor
+    - relationship manager
+    - compliance officer
+    - office manager
+    - executive assistant
+    - receptionist
+  # Optional LLM second pass on medium-confidence jobs (needs ANTHROPIC_API_KEY)
+  llm_second_pass: false
+  llm_model: claude-haiku-4-5-20251001
+
+sources:
+  firms_csv: data/firms_seed.csv
+  enriched_csv: data/enriched_companies.csv
+  greenhouse: true
+  lever: true
+  ashby: true
+  workday: true
+  github_trackers: true
+  openquant: true
+  # GitHub trackers to parse (raw README markdown). Add/remove freely.
+  github_tracker_urls:
+    - https://raw.githubusercontent.com/northwesternfintech/QuantInternships/main/README.md
+    - https://raw.githubusercontent.com/quant-hippo/new-grad-quant-positions/main/README.md
+  openquant_url: https://openquant.co/jobs
+
+database:
+  path: data/tracker.db
+  backup_dir: data/backups
+  export_csv: exports/jobs_export.csv
+
+allowlist_companies: []           # always alert regardless of confidence
+blocklist_companies: []           # never alert / never store as new

@@ -1,0 +1,2 @@
+company_name,normalized_company_name,source_status,source_notes,source_section,source_row,include_in_research,relevance_review_status,category_guess,priority_level,career_page_url,greenhouse_url,lever_url,workday_url,ashby_url,job_board_type,preferred_locations,role_keywords,exclude_keywords,notes_for_fable
+Example Trading Co,example trading co,,,E,1,yes,validate,prop trading or market making,high,https://example.com/careers,,,,,,New York;Singapore,quantitative trader;quantitative developer,sales;marketing,Append new firms in this format
